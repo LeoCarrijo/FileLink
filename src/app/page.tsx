@@ -1,6 +1,7 @@
 'use client'
 
 import Header from "@/components/header";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
@@ -105,14 +106,25 @@ export default function Home() {
   return (
     <div>
       <Header></Header>
-      <label htmlFor="arquivo">Escolha o arquivo: </label>
+      <div className="grid w-full max-w-sm items-center gap-1.5">
+        <Label htmlFor="arquivo">Arquivo</Label>
+        <Input id="arquivo" type="file" onChange={(e) => {
+        if (e.target.files && e.target.files[0]) {
+          handleFileChange(e.target.files[0]);
+        }
+      }}/>
+      </div>
+      <Input type="text" readOnly value={downloadLink}></Input>
+      <Button type="submit" variant="outline">Enviar</Button>
+      {/* <label htmlFor="arquivo">Escolha o arquivo: </label>
       <input type="file" name="arquivo" id="arquivo" onChange={(e) => {
         if (e.target.files && e.target.files[0]) {
           handleFileChange(e.target.files[0]);
         }
       }} />
+
       <input type="text" readOnly value={downloadLink} />
-      <button type="submit">Enviar</button>
+      <button type="submit">Enviar</button> */}
     </div>
   )
 }

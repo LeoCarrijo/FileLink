@@ -117,16 +117,6 @@ export default function Home() {
       </div>
       <Input type="text" readOnly value={downloadLink}></Input>
       <ModeToggle></ModeToggle>
-      {/* <Button type="submit" variant="outline">Enviar</Button> */}
-      {/* <label htmlFor="arquivo">Escolha o arquivo: </label>
-      <input type="file" name="arquivo" id="arquivo" onChange={(e) => {
-        if (e.target.files && e.target.files[0]) {
-          handleFileChange(e.target.files[0]);
-        }
-      }} />
-
-      <input type="text" readOnly value={downloadLink} />
-      <button type="submit">Enviar</button> */}
     </div>
   )
 }

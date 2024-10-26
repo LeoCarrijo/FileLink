@@ -1,6 +1,7 @@
 'use client'
 
 import Header from "@/components/header";
+import { ModeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -115,6 +116,7 @@ export default function Home() {
       }}/>
       </div>
       <Input type="text" readOnly value={downloadLink}></Input>
+      <ModeToggle></ModeToggle>
       {/* <Button type="submit" variant="outline">Enviar</Button> */}
       {/* <label htmlFor="arquivo">Escolha o arquivo: </label>
       <input type="file" name="arquivo" id="arquivo" onChange={(e) => {

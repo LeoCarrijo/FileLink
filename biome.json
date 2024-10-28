@@ -19,9 +19,13 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
+			"a11y": {
+				"useButtonType": "off"
+			},
 			"recommended": true,
 			"complexity": {
-				"useOptionalChain": "off"
+				"useOptionalChain": "off",
+				"noForEach": "off"
 			},
 			"nursery": {
 				"useSortedClasses": "warn"

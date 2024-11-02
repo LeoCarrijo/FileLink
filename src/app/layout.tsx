@@ -26,9 +26,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} flex h-screen items-center justify-center antialiased`}
-			>
+			<body className={`${geistSans.variable} ${geistMono.variable}`}>
 				<ThemeProvider
 					attribute="class"
 					defaultTheme="system"

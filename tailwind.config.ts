@@ -18,6 +18,9 @@ const config: Config = {
 			"5xl": "3.052rem",
 		},
 		extend: {
+			padding: {
+				"p-tema": "padding: 0 0 1.25rem 1.25rem",
+			},
 			colors: {
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",

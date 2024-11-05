@@ -21,15 +21,24 @@ const config: Config = {
 			gridTemplateColumns: {
 				header: "1fr 2fr 1fr",
 			},
+			gridTemplateRows: {
+				body: "1fr 3fr 1fr",
+			},
 			gridColumn: {
 				logo: "1 / 2",
 				titulo: "2 / 3",
 				avatar: "3 / 4",
+				header: "1 / 2",
+				main: "1 / 2",
+				footer: "1 / 2",
 			},
 			gridRow: {
 				logo: "1 / 2",
 				titulo: "1 / 2",
 				avatar: "1 / 2",
+				header: "1 / 2",
+				main: "2 / 3",
+				footer: "3 / 4",
 			},
 			padding: {
 				"p-tema": "padding: 0 0 1.25rem 1.25rem",

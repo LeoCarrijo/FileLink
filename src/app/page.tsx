@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from "@/components/footer";
 import Header from "@/components/header";
 import Main from "@/components/main";
 import { ModeToggle } from "@/components/theme-toggle";
@@ -16,6 +17,7 @@ export default function Home() {
 			<div className="absolute bottom-0 pb-8 pl-8">
 				<ModeToggle />
 			</div>
+			<Footer />
 		</div>
 	);
 }

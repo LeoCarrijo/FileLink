@@ -103,7 +103,7 @@ export default function Main() {
 	};
 
 	return (
-		<main className="flex flex-col items-center justify-center gap-1.5">
+		<main className="col-main row-main flex flex-col items-center justify-center gap-1.5">
 			<div className="max-w-sm flex-col">
 				<Label className="text-center" htmlFor="arquivo" />
 				<Input

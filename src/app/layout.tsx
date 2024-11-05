@@ -27,7 +27,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} h-screen w-screen`}
+				className={`${geistSans.variable} ${geistMono.variable} grid h-screen w-screen grid-rows-body`}
 			>
 				<ThemeProvider
 					attribute="class"

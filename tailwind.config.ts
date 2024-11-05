@@ -18,6 +18,19 @@ const config: Config = {
 			"5xl": "3.052rem",
 		},
 		extend: {
+			gridTemplateColumns: {
+				header: "1fr 2fr 1fr",
+			},
+			gridColumn: {
+				logo: "1 / 2",
+				titulo: "2 / 3",
+				avatar: "3 / 4",
+			},
+			gridRow: {
+				logo: "1 / 2",
+				titulo: "1 / 2",
+				avatar: "1 / 2",
+			},
 			padding: {
 				"p-tema": "padding: 0 0 1.25rem 1.25rem",
 			},

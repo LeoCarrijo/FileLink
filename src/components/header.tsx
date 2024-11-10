@@ -1,8 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import logo from "@/public/logo.png";
+import { createClient } from "@/app/lib/supabase/client";
 
-export default function Header() {
+export default async function Header() {
+	const supabase = await createClient();
+	const user = supabase.auth.getUser();
+	const avatarUrl = (await user).data.user?.user_metadata.avatar_url;
+
 	return (
 		<header className="col-header row-header grid grid-cols-header p-10">
 			{/* <div className="col-logo row-logo flex items-center justify-center">
@@ -22,7 +27,7 @@ export default function Header() {
 			</h1>
 			<div className="col-avatar row-avatar flex items-center justify-center">
 				<Avatar className="">
-					<AvatarImage src="https://github.com/shadcn.png" />
+					<AvatarImage src={avatarUrl} />
 					<AvatarFallback>CN</AvatarFallback>
 				</Avatar>
 			</div>

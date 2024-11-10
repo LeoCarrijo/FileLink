@@ -76,12 +76,12 @@ export default function Header() {
 								<p className="font-medium text-sm">
 									{user?.user_metadata?.name}
 								</p>
-								<p className="text-muted-foreground text-xs">Logged in</p>
+								<p className="text-muted-foreground text-xs">Autenticado</p>
 							</div>
 						</DropdownMenuItem>
 						<DropdownMenuItem className="flex items-center">
 							<User className="mr-2 h-4 w-4" />
-							<span>Profile</span>
+							<span>Perfil</span>
 						</DropdownMenuItem>
 						<DropdownMenuItem
 							className="flex items-center"
@@ -92,14 +92,14 @@ export default function Header() {
 							) : (
 								<Sun className="mr-2 h-4 w-4" />
 							)}
-							<span>Toggle theme</span>
+							<span>Mudar Tema</span>
 						</DropdownMenuItem>
 						<DropdownMenuItem
 							className="flex items-center"
 							onClick={handleLogout}
 						>
 							<LogOut className="mr-2 h-4 w-4" />
-							<span>Log out</span>
+							<span>Sair</span>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

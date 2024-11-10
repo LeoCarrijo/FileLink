@@ -14,9 +14,6 @@ export default function Home() {
 		<div>
 			<Header />
 			<Main />
-			<div className="absolute bottom-0 pb-8 pl-8">
-				<ModeToggle />
-			</div>
 			<Footer />
 		</div>
 	);

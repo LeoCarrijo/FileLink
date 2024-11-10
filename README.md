@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FileLink 🔗
 
-## Getting Started
+Uma plataforma segura e eficiente de compartilhamento de arquivos construída com Next.js, Supabase e Cloudflare R2.
 
-First, run the development server:
+## Funcionalidades ✨
+
+- **Upload Seguro de Arquivos**: Upload direto para R2 com URLs pré-assinadas
+- **Compartilhamento Rápido**: URLs curtas geradas automaticamente para compartilhamento fácil
+- **Autenticação GitHub**: Login seguro com OAuth do GitHub
+- **Modo Claro/Escuro**: Alternador de tema integrado
+- **Acompanhamento de Progresso**: Monitoramento em tempo real do progresso do upload
+- **Design Responsivo**: Funciona perfeitamente em todos os dispositivos
+
+## Stack Tecnológica 🛠️
+
+- **Frontend**: Next.js 14, React, TypeScript, Tailwind CSS
+- **Autenticação**: Supabase Auth
+- **Armazenamento**: Cloudflare R2
+- **Componentes UI**: shadcn/ui
+- **Estilização**: Tailwind CSS com Variáveis CSS
+- **Qualidade de Código**: Biome (Formatação & Linting)
+
+## Como Começar 🚀
+
+1. Clone o repositório:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/leocarrijo/filelink.git
+cd filelink
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Instale as dependências:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Configure as variáveis de ambiente:
 
-## Learn More
+```bash
+cp .env.example .env
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Inicie o servidor de desenvolvimento:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5. Abra [http://localhost:3000](http://localhost:3000) no seu navegador.
 
-## Deploy on Vercel
+## Contribuindo 🤝
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contribuições são bem-vindas! Sinta-se à vontade para enviar um Pull Request.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Faça um fork do projeto
+2. Crie sua branch de feature (`git checkout -b feature/RecursoIncrivel`)
+3. Faça commit das suas alterações (`git commit -m 'Adiciona algum RecursoIncrivel'`)
+4. Faça push para a branch (`git push origin feature/RecursoIncrivel`)
+5. Abra um Pull Request
+
+## Licença 📝
+
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+## Agradecimentos 🙏
+
+- [Next.js](https://nextjs.org/)
+- [Supabase](https://supabase.com/)
+- [Cloudflare R2](https://www.cloudflare.com/products/r2/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [TailwindCSS](https://tailwindcss.com/)

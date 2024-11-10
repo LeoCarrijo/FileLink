@@ -2,10 +2,10 @@ import { useState } from "react";
 import { ModeToggle } from "./theme-toggle";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { toast } from "sonner";
 
 export default function Main() {
 	const [downloadLink, setDownloadLink] = useState<string>("");
-	const [copiado, setCopiado] = useState(false);
 	const [isUploading, setIsUploading] = useState(false);
 	const [uploadProgress, setUploadProgress] = useState(0);
 	const [fileSize, setFileSize] = useState(0);
@@ -45,7 +45,7 @@ export default function Main() {
 					const downloadUrl = await getDownloadUrl(key);
 					const shortUrl = await encurtarUrl(downloadUrl);
 					setDownloadLink(shortUrl);
-					alert(`Arquivo "${file.name}" enviado com sucesso!`);
+					toast.success(`Arquivo "${file.name}" enviado com sucesso!`);
 				} else {
 					throw new Error("Falha no upload do arquivo");
 				}
@@ -53,14 +53,14 @@ export default function Main() {
 			};
 
 			xhr.onerror = () => {
-				alert("Erro ao enviar o arquivo. Por favor, tente novamente 1.");
+				toast.error("Erro ao enviar o arquivo. Por favor, tente novamente 1.");
 				setIsUploading(false);
 			};
 
 			xhr.send(file);
 		} catch (error) {
 			console.error("Erro ao enviar o arquivo:", error);
-			alert("Erro ao enviar o arquivo. Por favor, tente novamente.");
+			toast.error("Erro ao enviar o arquivo. Por favor, tente novamente.");
 			setIsUploading(false);
 		}
 	}

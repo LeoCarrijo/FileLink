@@ -105,10 +105,10 @@ export default function Main() {
 
 	return (
 		<div className="w-full max-w-md space-y-6 p-6">
-			<h2 className="text-center font-bold text-2xl">Upload Your File</h2>
+			<h2 className="text-center font-bold text-2xl">Suba o Arquivo</h2>
 			<div className="space-y-4">
 				<div>
-					<Label htmlFor="arquivo">Choose a file</Label>
+					<Label htmlFor="arquivo">Selecione o arquivo</Label>
 					<Input
 						id="arquivo"
 						type="file"
@@ -122,7 +122,7 @@ export default function Main() {
 				</div>
 				{downloadLink && (
 					<div>
-						<Label htmlFor="downloadLink">Download Link</Label>
+						<Label htmlFor="downloadLink">Link para Download</Label>
 						<div className="flex">
 							<Input
 								id="downloadLink"
@@ -134,11 +134,11 @@ export default function Main() {
 							<Button
 								onClick={() => {
 									navigator.clipboard.writeText(downloadLink);
-									toast.success("Link copied to clipboard!");
+									toast.success("Link copiado para área de transferência!");
 								}}
 								className="rounded-l-none"
 							>
-								Copy
+								Copiar
 							</Button>
 						</div>
 					</div>

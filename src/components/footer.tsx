@@ -8,20 +8,20 @@ export default function FooterComponent() {
 		<footer className="border-t">
 			<div className="container mx-auto flex items-center justify-between px-4 py-6">
 				<p className="text-muted-foreground text-sm">
-					© {new Date().getFullYear()} FileLink. All rights reserved.
+					© {new Date().getFullYear()} FileLink. Todos direitos reservados.
 				</p>
 				<nav className="flex items-center space-x-4">
 					<Link
-						href="/terms"
+						href="/termos"
 						className="text-muted-foreground text-sm hover:underline"
 					>
-						Terms
+						Termos de Servico
 					</Link>
 					<Link
-						href="/privacy"
+						href="/privacidade"
 						className="text-muted-foreground text-sm hover:underline"
 					>
-						Privacy
+						Privacidade
 					</Link>
 					<a
 						href="https://github.com/yourusername/filelink"

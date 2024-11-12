@@ -3,6 +3,7 @@ import { ModeToggle } from "./theme-toggle";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { toast } from "sonner";
+import { Button } from "./ui/button";
 
 export default function Main() {
 	const [downloadLink, setDownloadLink] = useState<string>("");
@@ -103,20 +104,47 @@ export default function Main() {
 	};
 
 	return (
-		<main className="col-main row-main flex flex-col items-center justify-center gap-1.5">
-			<div className="max-w-sm flex-col">
-				<Label className="text-center" htmlFor="arquivo" />
-				<Input
-					id="arquivo"
-					type="file"
-					onChange={(e) => {
-						if (e.target.files && e.target.files[0]) {
-							handleFileChange(e.target.files[0]);
-						}
-					}}
-				/>
+		<div className="w-full max-w-md space-y-6 p-6">
+			<h2 className="text-center font-bold text-2xl">Upload Your File</h2>
+			<div className="space-y-4">
+				<div>
+					<Label htmlFor="arquivo">Choose a file</Label>
+					<Input
+						id="arquivo"
+						type="file"
+						onChange={(e) => {
+							if (e.target.files && e.target.files[0]) {
+								handleFileChange(e.target.files[0]);
+							}
+						}}
+						disabled={isUploading}
+					/>
+				</div>
+				{downloadLink && (
+					<div>
+						<Label htmlFor="downloadLink">Download Link</Label>
+						<div className="flex">
+							<Input
+								id="downloadLink"
+								type="text"
+								readOnly
+								value={downloadLink}
+								className="rounded-r-none"
+							/>
+							<Button
+								onClick={() => {
+									navigator.clipboard.writeText(downloadLink);
+									toast.success("Link copied to clipboard!");
+								}}
+								className="rounded-l-none"
+							>
+								Copy
+							</Button>
+						</div>
+					</div>
+				)}
 			</div>
-			<Input type="text" readOnly className="w-2/5" value={downloadLink} />
-		</main>
+			{isUploading && <p className="text-center">Uploading...</p>}
+		</div>
 	);
 }

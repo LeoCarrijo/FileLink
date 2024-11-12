@@ -6,9 +6,11 @@ import Main from "@/components/main";
 
 export default function Home() {
 	return (
-		<div>
+		<div className="flex min-h-screen flex-col">
 			<Header />
-			<Main />
+			<div className="flex flex-grow items-center justify-center">
+				<Main />
+			</div>
 			<Footer />
 		</div>
 	);

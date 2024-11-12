@@ -8,7 +8,7 @@ export default function FooterComponent() {
 		<footer className="border-t">
 			<div className="container mx-auto flex items-center justify-between px-4 py-6">
 				<p className="text-muted-foreground text-sm">
-					© {new Date().getFullYear()} FileLink. Todos direitos reservados.
+					Feito com ❤️ por @LeoCarrijo
 				</p>
 				<nav className="flex items-center space-x-4">
 					<Link
@@ -24,7 +24,7 @@ export default function FooterComponent() {
 						Privacidade
 					</Link>
 					<a
-						href="https://github.com/yourusername/filelink"
+						href="https://github.com/LeoCarrijo/filelink"
 						target="_blank"
 						rel="noopener noreferrer"
 						className="text-muted-foreground hover:text-foreground"

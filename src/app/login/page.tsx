@@ -27,10 +27,10 @@ export default function LoginPageComponent() {
 			<Card className="w-full max-w-md">
 				<CardHeader className="space-y-1">
 					<CardTitle className="text-center font-bold text-2xl">
-						Welcome
+						Seja bem-vindo!
 					</CardTitle>
 					<CardDescription className="text-center">
-						Sign in to your account
+						Logue na sua conta
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
@@ -40,7 +40,7 @@ export default function LoginPageComponent() {
 						variant="outline"
 					>
 						<Github className="mr-2 h-5 w-5" />
-						Continue with GitHub
+						Continuar com Github
 					</Button>
 				</CardContent>
 			</Card>

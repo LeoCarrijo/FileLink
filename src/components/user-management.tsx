@@ -12,41 +12,44 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import { createClient } from "@/app/lib/supabase/client";
 
-type User = {
+type Usuario = {
 	id: string;
-	email: string;
-	created_at: string;
-	user_metadata: {
-		name?: string;
-	};
-	role?: string;
+	nome_usuario: string;
+	senha: string;
+	criado_em: string;
 };
 
 export default function UserManagement() {
-	const [users, setUsers] = useState<User[]>([]);
+	const [users, setUsers] = useState<Usuario[]>([]);
 	const [loading, setLoading] = useState(true);
-	const [editingUser, setEditingUser] = useState<User | null>(null);
-	const [newEmail, setNewEmail] = useState("");
-	const [newName, setNewName] = useState("");
+	const [editingUser, setEditingUser] = useState<Usuario | null>(null);
+	const [newUsername, setNewUsername] = useState("");
+	const [newPassword, setNewPassword] = useState("");
+
+	// Para novo usuário
+	const [addingUser, setAddingUser] = useState(false);
+	const [newUserData, setNewUserData] = useState({
+		nome_usuario: "",
+		senha: "",
+	});
 
 	useEffect(() => {
 		fetchUsers();
 	}, []);
 
 	async function fetchUsers() {
+		const supabase = await createClient();
 		try {
-			const response = await fetch("/api/users");
-			const data = await response.json();
+			const { data, error } = await supabase
+				.from("usuarios")
+				.select("*")
+				.order("criado_em", { ascending: false });
 
-			if (!response.ok) throw new Error(data.error);
-
-			setUsers(
-				data.users.map((user: User) => ({
-					...user,
-					email: user.email || "",
-				})),
-			);
+			if (error) throw error;
+			setUsers(data || []);
+			console.log(data);
 		} catch (error) {
 			toast.error("Erro ao carregar usuários");
 		} finally {
@@ -54,15 +57,36 @@ export default function UserManagement() {
 		}
 	}
 
-	async function handleDeleteUser(userId: string) {
+	async function handleAddUser() {
+		const supabase = await createClient();
 		try {
-			const response = await fetch("/api/users", {
-				method: "DELETE",
-				body: JSON.stringify({ userId }),
-			});
-			const data = await response.json();
+			const { error } = await supabase.from("usuarios").insert([
+				{
+					nome_usuario: newUserData.nome_usuario,
+					senha: newUserData.senha,
+				},
+			]);
 
-			if (!response.ok) throw new Error(data.error);
+			if (error) throw error;
+
+			toast.success("Usuário adicionado com sucesso");
+			setAddingUser(false);
+			setNewUserData({ nome_usuario: "", senha: "" });
+			fetchUsers();
+		} catch (error) {
+			toast.error("Erro ao adicionar usuário");
+		}
+	}
+
+	async function handleDeleteUser(userId: string) {
+		const supabase = await createClient();
+		try {
+			const { error } = await supabase
+				.from("usuarios")
+				.delete()
+				.eq("id", userId);
+
+			if (error) throw error;
 
 			toast.success("Usuário deletado com sucesso");
 			fetchUsers();
@@ -72,18 +96,17 @@ export default function UserManagement() {
 	}
 
 	async function handleUpdateUser(userId: string) {
+		const supabase = await createClient();
 		try {
-			const response = await fetch("/api/users", {
-				method: "PUT",
-				body: JSON.stringify({
-					userId,
-					email: newEmail || editingUser?.email,
-					name: newName || editingUser?.user_metadata?.name,
-				}),
-			});
-			const data = await response.json();
+			const { error } = await supabase
+				.from("usuarios")
+				.update({
+					nome_usuario: newUsername,
+					senha: newPassword,
+				})
+				.eq("id", userId);
 
-			if (!response.ok) throw new Error(data.error);
+			if (error) throw error;
 
 			toast.success("Usuário atualizado com sucesso");
 			setEditingUser(null);
@@ -99,11 +122,51 @@ export default function UserManagement() {
 
 	return (
 		<div className="space-y-4">
+			<Button
+				onClick={() => setAddingUser(true)}
+				className="mb-4"
+				variant="default"
+			>
+				Adicionar Usuário
+			</Button>
+
+			{addingUser && (
+				<div className="mb-4 space-y-4 rounded-lg border p-4">
+					<Input
+						placeholder="Nome de usuário"
+						value={newUserData.nome_usuario}
+						onChange={(e) =>
+							setNewUserData({ ...newUserData, nome_usuario: e.target.value })
+						}
+					/>
+					<Input
+						type="password"
+						placeholder="Senha"
+						value={newUserData.senha}
+						onChange={(e) =>
+							setNewUserData({ ...newUserData, senha: e.target.value })
+						}
+					/>
+					<div className="space-x-2">
+						<Button onClick={handleAddUser}>Salvar</Button>
+						<Button
+							variant="outline"
+							onClick={() => {
+								setAddingUser(false);
+								setNewUserData({ nome_usuario: "", senha: "" });
+							}}
+						>
+							Cancelar
+						</Button>
+					</div>
+				</div>
+			)}
+
 			<Table>
 				<TableHeader>
 					<TableRow>
-						<TableHead>Nome</TableHead>
-						<TableHead>Email</TableHead>
+						<TableHead>Usuário</TableHead>
+						<TableHead>Senha</TableHead>
 						<TableHead>Data de Criação</TableHead>
 						<TableHead>Ações</TableHead>
 					</TableRow>
@@ -114,27 +177,28 @@ export default function UserManagement() {
 							<TableCell>
 								{editingUser?.id === user.id ? (
 									<Input
-										value={newName}
-										onChange={(e) => setNewName(e.target.value)}
-										placeholder="Novo nome"
+										value={newUsername}
+										onChange={(e) => setNewUsername(e.target.value)}
+										placeholder="Novo usuário"
 									/>
 								) : (
-									user.user_metadata?.name || "N/A"
+									user.nome_usuario
 								)}
 							</TableCell>
 							<TableCell>
 								{editingUser?.id === user.id ? (
 									<Input
-										value={newEmail}
-										onChange={(e) => setNewEmail(e.target.value)}
-										placeholder="Novo email"
+										type="password"
+										value={newPassword}
+										onChange={(e) => setNewPassword(e.target.value)}
+										placeholder="Nova senha"
 									/>
 								) : (
-									user.email
+									user.senha
 								)}
 							</TableCell>
 							<TableCell>
-								{new Date(user.created_at).toLocaleDateString()}
+								{new Date(user.criado_em).toLocaleDateString()}
 							</TableCell>
 							<TableCell>
 								{editingUser?.id === user.id ? (
@@ -157,8 +221,8 @@ export default function UserManagement() {
 										<Button
 											onClick={() => {
 												setEditingUser(user);
-												setNewEmail(user.email);
-												setNewName(user.user_metadata?.name || "");
+												setNewUsername(user.nome_usuario);
+												setNewPassword(user.senha);
 											}}
 											variant="outline"
 										>

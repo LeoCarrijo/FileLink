@@ -8,10 +8,9 @@ export default async function UsersPage() {
 		data: { user },
 	} = await supabase.auth.getUser();
 
-	// Verify if user is admin (you'll need to add a custom claim or role in Supabase)
-	// if (!user || user.role !== "admin") {
-	// 	redirect("/");
-	// }
+	if (!user) {
+		redirect("/login");
+	}
 
 	return (
 		<div className="container mx-auto py-8">

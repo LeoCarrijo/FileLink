@@ -17,8 +17,8 @@ import {
 type Team = {
 	id: string;
 	nome_equipe: string;
-	quantidade_membros: number;
-	membros: string;
+	// quantidade_membros: number;
+	// membros: string;
 	criado_em: string;
 };
 
@@ -26,14 +26,14 @@ export default function TeamManagement() {
 	const [teams, setTeams] = useState<Team[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [newTeamName, setNewTeamName] = useState("");
-	const [newTeamMembers, setNewTeamMembers] = useState("");
-	const [newTeamMembersQuantity, setNewTeamMembersQuantity] = useState(0);
+	// const [newTeamMembers, setNewTeamMembers] = useState("");
+	// const [newTeamMembersQuantity, setNewTeamMembersQuantity] = useState(0);
 	const [editingTeam, setEditingTeam] = useState<Team | null>(null);
 	const [addingTeam, setAddingTeam] = useState(false);
 	const [newTeamData, setNewTeamData] = useState({
 		nome_equipe: "",
-		membros: "",
-		quantidade_membros: 0,
+		// membros: "",
+		// quantidade_membros: 0,
 	});
 
 	useEffect(() => {
@@ -66,16 +66,16 @@ export default function TeamManagement() {
 		try {
 			const { error } = await supabase.from("equipes").insert({
 				nome_equipe: newTeamData.nome_equipe,
-				membros: newTeamData.membros,
-				quantidade_membros: newTeamData.quantidade_membros,
+				// membros: newTeamData.membros,
+				// quantidade_membros: newTeamData.quantidade_membros,
 			});
 			if (error) throw error;
 			toast.success("Equipe adicionada com sucesso");
 			setAddingTeam(false);
 			setNewTeamData({
 				nome_equipe: "",
-				membros: "",
-				quantidade_membros: 0,
+				// membros: "",
+				// quantidade_membros: 0,
 			});
 			fetchTeams();
 		} catch (error) {
@@ -106,8 +106,8 @@ export default function TeamManagement() {
 				.from("equipes")
 				.update({
 					nome_equipe: newTeamName,
-					membros: newTeamMembers,
-					quantidade_membros: newTeamMembersQuantity,
+					// membros: newTeamMembers,
+					// quantidade_membros: newTeamMembersQuantity,
 				})
 				.eq("id", teamId);
 
@@ -145,7 +145,7 @@ export default function TeamManagement() {
 							})
 						}
 					/>
-					<Input
+					{/* <Input
 						placeholder="Membros da equipe"
 						value={newTeamData.membros}
 						onChange={(e) =>
@@ -154,8 +154,8 @@ export default function TeamManagement() {
 								membros: e.target.value,
 							})
 						}
-					/>
-					<Input
+					/> */}
+					{/* <Input
 						type="number"
 						placeholder="Quantidade de membros"
 						value={newTeamData.quantidade_membros}
@@ -165,7 +165,7 @@ export default function TeamManagement() {
 								quantidade_membros: Number(e.target.value),
 							})
 						}
-					/>
+					/> */}
 					<div className="space-x-2">
 						<Button onClick={handleAddTeam}>Salvar</Button>
 						<Button
@@ -174,8 +174,8 @@ export default function TeamManagement() {
 								setAddingTeam(false);
 								setNewTeamData({
 									nome_equipe: "",
-									membros: "",
-									quantidade_membros: 0,
+									// membros: "",
+									// quantidade_membros: 0,
 								});
 							}}
 						>
@@ -189,8 +189,8 @@ export default function TeamManagement() {
 				<TableHeader>
 					<TableRow>
 						<TableHead>Nome da Equipe</TableHead>
-						<TableHead>Membros</TableHead>
-						<TableHead>Quantidade de Membros</TableHead>
+						{/* <TableHead>Membros</TableHead> */}
+						{/* <TableHead>Quantidade de Membros</TableHead> */}
 						<TableHead>Data de Criação</TableHead>
 						<TableHead>Ações</TableHead>
 					</TableRow>
@@ -209,7 +209,7 @@ export default function TeamManagement() {
 									team.nome_equipe
 								)}
 							</TableCell>
-							<TableCell>
+							{/* <TableCell>
 								{editingTeam?.id === team.id ? (
 									<Input
 										value={newTeamMembers}
@@ -219,8 +219,8 @@ export default function TeamManagement() {
 								) : (
 									team.membros
 								)}
-							</TableCell>
-							<TableCell>
+							</TableCell> */}
+							{/* <TableCell>
 								{editingTeam?.id === team.id ? (
 									<Input
 										type="number"
@@ -233,7 +233,7 @@ export default function TeamManagement() {
 								) : (
 									team.quantidade_membros
 								)}
-							</TableCell>
+							</TableCell> */}
 							<TableCell>
 								{new Date(team.criado_em).toLocaleDateString()}
 							</TableCell>
@@ -259,8 +259,8 @@ export default function TeamManagement() {
 											onClick={() => {
 												setEditingTeam(team);
 												setNewTeamName(team.nome_equipe);
-												setNewTeamMembers(team.membros);
-												setNewTeamMembersQuantity(team.quantidade_membros);
+												// setNewTeamMembers(team.membros);
+												// setNewTeamMembersQuantity(team.quantidade_membros);
 											}}
 										>
 											Editar

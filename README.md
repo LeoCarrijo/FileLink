@@ -48,11 +48,3 @@ pnpm dev
 ```
 
 5. Abra [http://localhost:3000](http://localhost:3000) no seu navegador.
-
-## Agradecimentos 🙏
-
-- [Next.js](https://nextjs.org/)
-- [Supabase](https://supabase.com/)
-- [Cloudflare R2](https://www.cloudflare.com/products/r2/)
-- [shadcn/ui](https://ui.shadcn.com/)
-- [TailwindCSS](https://tailwindcss.com/)

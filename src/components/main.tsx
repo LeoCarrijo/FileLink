@@ -144,7 +144,7 @@ export default function Main() {
 					</div>
 				)}
 			</div>
-			{isUploading && <p className="text-center">Uploading...</p>}
+			{isUploading && <p className="text-center">Subindo o Arquivo...</p>}
 		</div>
 	);
 }

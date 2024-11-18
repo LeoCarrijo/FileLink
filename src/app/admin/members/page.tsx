@@ -1,5 +1,5 @@
 import { createClient } from "@/app/lib/supabase/server";
-import TestManagement from "@/components/test-management";
+import MembersManagement from "@/components/members-management";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Users } from "lucide-react";
 import Link from "next/link";
@@ -31,7 +31,7 @@ export default async function MembersPage() {
 					</h1>
 				</div>
 			</div>
-			<TestManagement />
+			<MembersManagement />
 		</div>
 	);
 }

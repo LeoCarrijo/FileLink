@@ -43,7 +43,7 @@ export default function TestManagement() {
 			const { data, error } = await supabase
 				.from("equipes_membros")
 				.select("*")
-				.order("criado_em", { ascending: false });
+				.order("equipe_nome", { ascending: true });
 
 			if (error) {
 				console.log("Erro ao carregar membros:", error);
@@ -174,6 +174,8 @@ export default function TestManagement() {
 					<TableRow>
 						<TableHead>Nome</TableHead>
 						<TableHead>Nome da Equipe</TableHead>
+						<TableHead>Data de Criação</TableHead>
+						<TableHead>Ações</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>

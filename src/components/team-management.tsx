@@ -191,6 +191,7 @@ export default function TeamManagement() {
 						<TableHead>Nome da Equipe</TableHead>
 						<TableHead>Membros</TableHead>
 						<TableHead>Quantidade de Membros</TableHead>
+						<TableHead>Data de Criação</TableHead>
 						<TableHead>Ações</TableHead>
 					</TableRow>
 				</TableHeader>

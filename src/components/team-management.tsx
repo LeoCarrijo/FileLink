@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { createClient } from "@/app/lib/supabase/client";
+import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { toast } from "sonner";
 import {
 	Table,
 	TableBody,
@@ -11,26 +12,23 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from "@/components/ui/table";
-import { createClient } from "@/app/lib/supabase/client";
+} from "./ui/table";
 
-type Equipe = {
+type Team = {
 	id: string;
 	nome_equipe: string;
+	quantidade_membros: number;
 	membros: string;
 	criado_em: string;
-	quantidade_membros: number;
 };
 
 export default function TeamManagement() {
-	const [teams, setTeams] = useState<Equipe[]>([]);
+	const [teams, setTeams] = useState<Team[]>([]);
 	const [loading, setLoading] = useState(true);
-	const [editingTeam, setEditingTeam] = useState<Equipe | null>(null);
 	const [newTeamName, setNewTeamName] = useState("");
-	const [newMembers, setNewMembers] = useState("");
-	const [newMemberCount, setNewMemberCount] = useState<number>(0);
-
-	// Para nova equipe
+	const [newTeamMembers, setNewTeamMembers] = useState("");
+	const [newTeamMembersQuantity, setNewTeamMembersQuantity] = useState(0);
+	const [editingTeam, setEditingTeam] = useState<Team | null>(null);
 	const [addingTeam, setAddingTeam] = useState(false);
 	const [newTeamData, setNewTeamData] = useState({
 		nome_equipe: "",
@@ -43,16 +41,20 @@ export default function TeamManagement() {
 	}, []);
 
 	async function fetchTeams() {
-		const supabase = await createClient();
+		const supabase = createClient();
 		try {
 			const { data, error } = await supabase
 				.from("equipes")
 				.select("*")
 				.order("criado_em", { ascending: false });
-
-			if (error) throw error;
-			setTeams(data || []);
+			if (error) {
+				console.error("Erro ao carregar equipes: ", error);
+			} else {
+				setTeams(data);
+				console.log("Equipes carregadas com sucesso: ", data);
+			}
 		} catch (error) {
+			console.error("Erro ao carregar equipes: ", error);
 			toast.error("Erro ao carregar equipes");
 		} finally {
 			setLoading(false);
@@ -60,21 +62,22 @@ export default function TeamManagement() {
 	}
 
 	async function handleAddTeam() {
-		const supabase = await createClient();
+		const supabase = createClient();
 		try {
-			const { error } = await supabase.from("equipes").insert([
-				{
-					nome_equipe: newTeamData.nome_equipe,
-					membros: newTeamData.membros,
-					quantidade_membros: newTeamData.quantidade_membros,
-				},
-			]);
-
+			console.log(newTeamData);
+			const { error } = await supabase.from("equipes").insert({
+				nome_equipe: newTeamData.nome_equipe,
+				membros: newTeamData.membros,
+				quantidade_membros: newTeamData.quantidade_membros,
+			});
 			if (error) throw error;
-
 			toast.success("Equipe adicionada com sucesso");
 			setAddingTeam(false);
-			setNewTeamData({ nome_equipe: "", membros: "", quantidade_membros: 0 });
+			setNewTeamData({
+				nome_equipe: "",
+				membros: "",
+				quantidade_membros: 0,
+			});
 			fetchTeams();
 		} catch (error) {
 			toast.error("Erro ao adicionar equipe");
@@ -82,7 +85,7 @@ export default function TeamManagement() {
 	}
 
 	async function handleDeleteTeam(teamId: string) {
-		const supabase = await createClient();
+		const supabase = createClient();
 		try {
 			const { error } = await supabase
 				.from("equipes")
@@ -90,7 +93,6 @@ export default function TeamManagement() {
 				.eq("id", teamId);
 
 			if (error) throw error;
-
 			toast.success("Equipe deletada com sucesso");
 			fetchTeams();
 		} catch (error) {
@@ -99,19 +101,16 @@ export default function TeamManagement() {
 	}
 
 	async function handleUpdateTeam(teamId: string) {
-		const supabase = await createClient();
+		const supabase = createClient();
 		try {
 			const { error } = await supabase
 				.from("equipes")
 				.update({
 					nome_equipe: newTeamName,
-					membros: newMembers,
-					quantidade_membros: newMemberCount,
+					membros: newTeamMembers,
+					quantidade_membros: newTeamMembersQuantity,
 				})
 				.eq("id", teamId);
-
-			if (error) throw error;
-
 			toast.success("Equipe atualizada com sucesso");
 			setEditingTeam(null);
 			fetchTeams();
@@ -133,21 +132,26 @@ export default function TeamManagement() {
 			>
 				Adicionar Equipe
 			</Button>
-
 			{addingTeam && (
 				<div className="mb-4 space-y-4 rounded-lg border p-4">
 					<Input
 						placeholder="Nome da equipe"
 						value={newTeamData.nome_equipe}
 						onChange={(e) =>
-							setNewTeamData({ ...newTeamData, nome_equipe: e.target.value })
+							setNewTeamData({
+								...newTeamData,
+								nome_equipe: e.target.value,
+							})
 						}
 					/>
 					<Input
-						placeholder="Membros (separados por vírgula)"
+						placeholder="Membros da equipe"
 						value={newTeamData.membros}
 						onChange={(e) =>
-							setNewTeamData({ ...newTeamData, membros: e.target.value })
+							setNewTeamData({
+								...newTeamData,
+								membros: e.target.value,
+							})
 						}
 					/>
 					<Input
@@ -157,7 +161,7 @@ export default function TeamManagement() {
 						onChange={(e) =>
 							setNewTeamData({
 								...newTeamData,
-								quantidade_membros: Number.parseInt(e.target.value) || 0,
+								quantidade_membros: Number(e.target.value),
 							})
 						}
 					/>
@@ -186,7 +190,6 @@ export default function TeamManagement() {
 						<TableHead>Nome da Equipe</TableHead>
 						<TableHead>Membros</TableHead>
 						<TableHead>Quantidade de Membros</TableHead>
-						<TableHead>Data de Criação</TableHead>
 						<TableHead>Ações</TableHead>
 					</TableRow>
 				</TableHeader>
@@ -207,9 +210,9 @@ export default function TeamManagement() {
 							<TableCell>
 								{editingTeam?.id === team.id ? (
 									<Input
-										value={newMembers}
-										onChange={(e) => setNewMembers(e.target.value)}
-										placeholder="Novos membros"
+										value={newTeamMembers}
+										onChange={(e) => setNewTeamMembers(e.target.value)}
+										placeholder="Novo membro da equipe"
 									/>
 								) : (
 									team.membros
@@ -219,11 +222,11 @@ export default function TeamManagement() {
 								{editingTeam?.id === team.id ? (
 									<Input
 										type="number"
-										value={newMemberCount}
+										value={newTeamMembersQuantity}
 										onChange={(e) =>
-											setNewMemberCount(Number.parseInt(e.target.value) || 0)
+											setNewTeamMembersQuantity(Number(e.target.value))
 										}
-										placeholder="Nova quantidade"
+										placeholder="Nova quantidade de membros"
 									/>
 								) : (
 									team.quantidade_membros
@@ -254,15 +257,16 @@ export default function TeamManagement() {
 											onClick={() => {
 												setEditingTeam(team);
 												setNewTeamName(team.nome_equipe);
-												setNewMembers(team.membros);
-												setNewMemberCount(team.quantidade_membros);
+												setNewTeamMembers(team.membros);
+												setNewTeamMembersQuantity(team.quantidade_membros);
 											}}
-											variant="outline"
 										>
 											Editar
 										</Button>
 										<Button
-											onClick={() => handleDeleteTeam(team.id)}
+											onClick={() => {
+												handleDeleteTeam(team.id);
+											}}
 											variant="destructive"
 										>
 											Deletar

@@ -46,10 +46,10 @@ export default function UserManagement() {
 				.from("usuarios")
 				.select("*")
 				.order("criado_em", { ascending: false });
-
 			if (error) throw error;
 			setUsers(data || []);
 			console.log(data);
+			console.log("Usuários carregados com sucesso");
 		} catch (error) {
 			toast.error("Erro ao carregar usuários");
 		} finally {

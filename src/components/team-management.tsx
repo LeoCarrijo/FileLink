@@ -64,7 +64,6 @@ export default function TeamManagement() {
 	async function handleAddTeam() {
 		const supabase = createClient();
 		try {
-			console.log(newTeamData);
 			const { error } = await supabase.from("equipes").insert({
 				nome_equipe: newTeamData.nome_equipe,
 				membros: newTeamData.membros,
@@ -111,6 +110,8 @@ export default function TeamManagement() {
 					quantidade_membros: newTeamMembersQuantity,
 				})
 				.eq("id", teamId);
+
+			if (error) throw error;
 			toast.success("Equipe atualizada com sucesso");
 			setEditingTeam(null);
 			fetchTeams();

@@ -194,7 +194,7 @@ export default function UserManagement() {
 										placeholder="Nova senha"
 									/>
 								) : (
-									user.senha
+									"*******"
 								)}
 							</TableCell>
 							<TableCell>

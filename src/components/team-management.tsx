@@ -17,8 +17,6 @@ import {
 type Team = {
 	id: string;
 	nome_equipe: string;
-	// quantidade_membros: number;
-	// membros: string;
 	criado_em: string;
 };
 
@@ -26,14 +24,10 @@ export default function TeamManagement() {
 	const [teams, setTeams] = useState<Team[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [newTeamName, setNewTeamName] = useState("");
-	// const [newTeamMembers, setNewTeamMembers] = useState("");
-	// const [newTeamMembersQuantity, setNewTeamMembersQuantity] = useState(0);
 	const [editingTeam, setEditingTeam] = useState<Team | null>(null);
 	const [addingTeam, setAddingTeam] = useState(false);
 	const [newTeamData, setNewTeamData] = useState({
 		nome_equipe: "",
-		// membros: "",
-		// quantidade_membros: 0,
 	});
 
 	useEffect(() => {
@@ -66,16 +60,12 @@ export default function TeamManagement() {
 		try {
 			const { error } = await supabase.from("equipes").insert({
 				nome_equipe: newTeamData.nome_equipe,
-				// membros: newTeamData.membros,
-				// quantidade_membros: newTeamData.quantidade_membros,
 			});
 			if (error) throw error;
 			toast.success("Equipe adicionada com sucesso");
 			setAddingTeam(false);
 			setNewTeamData({
 				nome_equipe: "",
-				// membros: "",
-				// quantidade_membros: 0,
 			});
 			fetchTeams();
 		} catch (error) {
@@ -106,8 +96,6 @@ export default function TeamManagement() {
 				.from("equipes")
 				.update({
 					nome_equipe: newTeamName,
-					// membros: newTeamMembers,
-					// quantidade_membros: newTeamMembersQuantity,
 				})
 				.eq("id", teamId);
 
@@ -145,27 +133,6 @@ export default function TeamManagement() {
 							})
 						}
 					/>
-					{/* <Input
-						placeholder="Membros da equipe"
-						value={newTeamData.membros}
-						onChange={(e) =>
-							setNewTeamData({
-								...newTeamData,
-								membros: e.target.value,
-							})
-						}
-					/> */}
-					{/* <Input
-						type="number"
-						placeholder="Quantidade de membros"
-						value={newTeamData.quantidade_membros}
-						onChange={(e) =>
-							setNewTeamData({
-								...newTeamData,
-								quantidade_membros: Number(e.target.value),
-							})
-						}
-					/> */}
 					<div className="space-x-2">
 						<Button onClick={handleAddTeam}>Salvar</Button>
 						<Button
@@ -174,8 +141,6 @@ export default function TeamManagement() {
 								setAddingTeam(false);
 								setNewTeamData({
 									nome_equipe: "",
-									// membros: "",
-									// quantidade_membros: 0,
 								});
 							}}
 						>

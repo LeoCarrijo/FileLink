@@ -5,7 +5,7 @@ import { ArrowLeft, Users } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-export default async function TestPage() {
+export default async function MembersPage() {
 	const supabase = await createClient();
 	const {
 		data: { user },

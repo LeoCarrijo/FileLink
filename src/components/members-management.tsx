@@ -16,7 +16,7 @@ import { toast } from "sonner";
 
 type Member = {
 	nome: string;
-	equipe_id: number;
+	equipe_nome: string;
 	criado_em: string;
 	id: number;
 };
@@ -25,12 +25,12 @@ export default function TestManagement() {
 	const [members, setMembers] = useState<Member[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [newMemberName, setNewMemberName] = useState("");
-	const [newTeamId, setNewTeamId] = useState(0);
+	const [newMembersTeamName, setNewMembersTeamName] = useState("");
 	const [editingMember, setEditingMember] = useState<Member | null>(null);
 	const [addingMember, setAddingMember] = useState(false);
 	const [newMemberData, setNewMemberData] = useState({
 		nome: "",
-		equipe_id: 0,
+		equipe_nome: "",
 	});
 
 	useEffect(() => {
@@ -62,16 +62,17 @@ export default function TestManagement() {
 	async function handleAddMember() {
 		const supabase = createClient();
 		try {
+			console.log(newMemberData);
 			const { error } = await supabase.from("equipes_membros").insert({
 				nome: newMemberData.nome,
-				equipe_id: newMemberData.equipe_id,
+				equipe_nome: newMemberData.equipe_nome,
 			});
 			if (error) throw error;
 			toast.success("Membro adicionado com sucesso");
 			setAddingMember(false);
 			setNewMemberData({
 				nome: "",
-				equipe_id: 0,
+				equipe_nome: "",
 			});
 			fetchMembers();
 		} catch (error) {
@@ -102,7 +103,7 @@ export default function TestManagement() {
 				.from("equipes_membros")
 				.update({
 					nome: newMemberName,
-					equipe_id: newTeamId,
+					equipe_nome: newMembersTeamName,
 				})
 				.eq("id", memberId);
 
@@ -141,12 +142,12 @@ export default function TestManagement() {
 						}
 					/>
 					<Input
-						placeholder="ID da Equipe"
-						value={newMemberData.equipe_id}
+						placeholder="Nome da Equipe Pertencente"
+						value={newMemberData.equipe_nome}
 						onChange={(e) =>
 							setNewMemberData({
 								...newMemberData,
-								equipe_id: Number(e.target.value),
+								equipe_nome: e.target.value,
 							})
 						}
 					/>
@@ -158,7 +159,7 @@ export default function TestManagement() {
 								setAddingMember(false);
 								setNewMemberData({
 									nome: "",
-									equipe_id: 0,
+									equipe_nome: "",
 								});
 							}}
 						>
@@ -172,7 +173,7 @@ export default function TestManagement() {
 				<TableHeader>
 					<TableRow>
 						<TableHead>Nome</TableHead>
-						<TableHead>ID da Equipe</TableHead>
+						<TableHead>Nome da Equipe</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
@@ -192,12 +193,12 @@ export default function TestManagement() {
 							<TableCell>
 								{editingMember?.id === member.id ? (
 									<Input
-										value={newTeamId}
-										onChange={(e) => setNewTeamId(Number(e.target.value))}
-										placeholder="Novo ID da equipe"
+										value={newMembersTeamName}
+										onChange={(e) => setNewMembersTeamName(e.target.value)}
+										placeholder="Nova equipe pertencente"
 									/>
 								) : (
-									member.equipe_id
+									member.equipe_nome
 								)}
 							</TableCell>
 							<TableCell>
@@ -225,7 +226,7 @@ export default function TestManagement() {
 											onClick={() => {
 												setEditingMember(member);
 												setNewMemberName(member.nome);
-												setNewTeamId(member.equipe_id);
+												setNewMembersTeamName(member.equipe_nome);
 											}}
 										>
 											Editar
